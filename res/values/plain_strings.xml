@@ -23,5 +23,8 @@
     <!-- Rom Versioning -->
     <string name="display_category_rom_versioning_title">Rom Build Information</string>
     <string name="display_category_rom_versioning_summary">Software status of ROM</string>
+    <!-- Build date -->
+    <string name="build_date">Build date</string>
+    <string name="build_date_default">2012-01-01-0000</string>
 
 </resources>
