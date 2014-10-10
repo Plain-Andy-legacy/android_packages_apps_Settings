@@ -65,6 +65,13 @@
     <!-- About phone screen, Free memory info -->
     <string name="mem_info">Memory</string>
 
+    <!-- Wifi connection notifications -->
+    <string name="wifi_notify_changed_networks">Wi\u2011Fi connected notification</string>
+    <string name="notify_changed_networks_default">Off (default)</string>
+    <string name="notify_changed_networks_toast">Toast</string>
+    <string name="notify_changed_networks_notification">Notification</string>
+    <string name="notify_changed_networks_notification_sound">Notification with sound</string>
+
     <!-- Rom Versioning -->
     <string name="display_category_rom_versioning_title">Software build information</string>
     <string name="display_category_rom_versioning_summary">Software status of aosp version, kernel version, buildtype, etc</string>
