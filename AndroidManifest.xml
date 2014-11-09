@@ -80,6 +80,12 @@
             android:supportsRtl="true"
             android:allowBackup="false">
 
+        <activity android:name=".orbix.ChangeLog" android:label="@string/changelog_title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <!-- Settings -->
 
         <activity android:name="Settings"
