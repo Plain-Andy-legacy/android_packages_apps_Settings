@@ -153,6 +153,14 @@
              android:title="@string/display_category_rom_versioning_title"
              android:summary="@string/display_category_rom_versioning_summary">
 
+        <!-- Change Log -->
+        <PreferenceScreen android:key="changelog"
+            android:title="@string/changelog_title">
+            <intent android:action="android.intent.action.MAIN"
+                android:targetPackage="com.android.settings"
+                android:targetClass="com.android.settings.orbix.ChangeLog" />
+        </PreferenceScreen>
+
         <Preference android:key="plain_version"
                 style="?android:preferenceInformationStyle"
                 android:title="@string/plain_version_title"
