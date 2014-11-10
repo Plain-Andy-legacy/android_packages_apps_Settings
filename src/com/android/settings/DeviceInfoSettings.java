@@ -83,7 +83,8 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
     private static final String KEY_DEVICE_FEEDBACK = "device_feedback";
     private static final String KEY_SAFETY_LEGAL = "safetylegal";
 
-    static final int TAPS_TO_BE_A_DEVELOPER = 7;
+    /* Reduced taps from 7 to 3 for developer options */
+    static final int TAPS_TO_BE_A_DEVELOPER = 3;
 
     long[] mHits = new long[3];
     int mDevHitCountdown;
