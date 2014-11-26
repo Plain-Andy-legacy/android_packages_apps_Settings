@@ -20,4 +20,8 @@
     <string name="pref_volume_wake_title">Volume rocker wake</string>
     <string name="pref_volume_wake_summary">Pressing the volume rocker up/down will wake the device</string>
 
+    <!-- Rom Versioning -->
+    <string name="display_category_rom_versioning_title">Rom Build Information</string>
+    <string name="display_category_rom_versioning_summary">Software status of ROM</string>
+
 </resources>
