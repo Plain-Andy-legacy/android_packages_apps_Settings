@@ -23,10 +23,4 @@
     <dimen name="fab_elevation_normal">8dp</dimen>
     <dimen name="fab_elevation_pressed">6dp</dimen>
 
-    <!-- About phone screen, liquid version -->
-    <string name="plain_version_title">Plain-Andy version</string>
-    <string name="plain_version_default">Unknown</string>
-    <!-- About phone screen, rom versioning -->
-    <string name="rom_buildtype_title">Rom Buildtype</string>
-
 </resources>
