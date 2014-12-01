@@ -107,5 +107,9 @@
     <string name="notify_plaintweak_default">Off (default)</string>
     <string name="notify_plaintweak_toast">Toast</string>
     <string name="notify_plaintweak_notification">Notification</string>
+        
+    <!-- Proximity wake -->
+    <string name="proximity_wake_title">Prevent accidental wake-up</string>
+    <string name="proximity_wake_summary">Check the proximity sensor prior to waking up screen</string>
     
 </resources>

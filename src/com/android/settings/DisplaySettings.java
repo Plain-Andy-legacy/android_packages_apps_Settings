@@ -49,7 +49,6 @@ import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
-import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -72,6 +71,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_AUTO_BRIGHTNESS = "auto_brightness";
     private static final String KEY_AUTO_ROTATE = "auto_rotate";
     private static final String KEY_VOLUME_WAKE = "pref_volume_wake";
+    private static final String KEY_PROXIMITY_WAKE = "proximity_on_wake";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
@@ -177,6 +177,18 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 mVolumeWake.setChecked(Settings.System.getInt(resolver,
                         Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
                 mVolumeWake.setOnPreferenceChangeListener(this);
+            }
+        }
+
+        Preference proximityWake = findPreference(KEY_PROXIMITY_WAKE);
+        boolean proximityCheckOnWake = getResources().getBoolean(
+                com.android.internal.R.bool.config_proximityCheckOnWake);
+
+        if (proximityWake != null) {
+            if (mWakeUpOptions != null && !proximityCheckOnWake) {
+                mWakeUpOptions.removePreference(proximityWake);
+                        Settings.System.putInt(getContentResolver(),
+                                Settings.System.PROXIMITY_ON_WAKE, 1);
             }
         }
     }
@@ -415,42 +427,4 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         }
         return false;
     }
-
-    public static final Indexable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
-            new BaseSearchIndexProvider() {
-                @Override
-                public List<SearchIndexableResource> getXmlResourcesToIndex(Context context,
-                        boolean enabled) {
-                    ArrayList<SearchIndexableResource> result =
-                            new ArrayList<SearchIndexableResource>();
-
-                    SearchIndexableResource sir = new SearchIndexableResource(context);
-                    sir.xmlResId = R.xml.display_settings;
-                    result.add(sir);
-
-                    return result;
-                }
-
-                @Override
-                public List<String> getNonIndexableKeys(Context context) {
-                    ArrayList<String> result = new ArrayList<String>();
-                    if (!context.getResources().getBoolean(
-                            com.android.internal.R.bool.config_dreamsSupported)) {
-                        result.add(KEY_SCREEN_SAVER);
-                    }
-                    if (!isAutomaticBrightnessAvailable(context.getResources())) {
-                        result.add(KEY_AUTO_BRIGHTNESS);
-                    }
-                    if (!isLiftToWakeAvailable(context)) {
-                        result.add(KEY_LIFT_TO_WAKE);
-                    }
-                    if (!isDozeAvailable(context)) {
-                        result.add(KEY_DOZE);
-                    }
-                    if (!RotationPolicy.isRotationLockToggleVisible(context)) {
-                        result.add(KEY_AUTO_ROTATE);
-                    }
-                    return result;
-                }
-            };
 }
