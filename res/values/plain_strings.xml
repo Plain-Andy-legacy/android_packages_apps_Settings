@@ -29,6 +29,25 @@
     <string name="partition_info_sdext">/sd-ext (EXT)</string>
     <string name="partition_info_used_of">/</string>
 
+    <!--  About device screen, Hardware info -->
+    <string name="hardware_info">Hardware info</string>
+    <!--  About device Screen, hardware info, rear camera -->
+    <string name="device_rear_camera">Rear camera</string>
+    <!--  About device Screen, hardware info, front camera -->
+    <string name="device_front_camera">Front facing camera</string>
+    <!--  About device Screen, hardware info, screen res -->
+    <string name="device_screen_resolution">Screen resolution</string>
+    <!--  About device Screen, hardware info, GPU info -->
+    <string name="gpu_info">GPU</string>
+    <!-- About device screen, Cpu info. -->
+    <string name="cpu_info">CPU</string>
+    <!-- About phone screen, Free memory info -->
+    <string name="mem_info">Memory</string>
+    
+    <!-- Unaccounted and overcounted battery stats -->
+    <string name="show_unac_and_overcounted_stats_title">Show unaccounted/overcounted stats</string>
+    <string name="show_unac_and_overcounted_stats_summary">Show in battery statistics unaccounted and over-counted usage.</string>
+
     <!-- Rom Versioning -->
     <string name="display_category_rom_versioning_title">Rom Build Information</string>
     <string name="display_category_rom_versioning_summary">Software status of ROM</string>
