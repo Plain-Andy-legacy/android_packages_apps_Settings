@@ -72,6 +72,10 @@
     <string name="notify_changed_networks_notification">Notification</string>
     <string name="notify_changed_networks_notification_sound">Notification with sound</string>
 
+    <!-- Unaccounted and overcounted battery stats -->
+    <string name="show_unac_and_overcounted_stats_title">Show unaccounted/overcounted stats</string>
+    <string name="show_unac_and_overcounted_stats_summary">Show in battery statistics unaccounted and over-counted usage.</string>
+
     <!-- Rom Versioning -->
     <string name="display_category_rom_versioning_title">Software build information</string>
     <string name="display_category_rom_versioning_summary">Software status of aosp version, kernel version, buildtype, etc</string>
