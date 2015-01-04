@@ -2094,6 +2094,20 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="Settings$PlainTweakInfo"
+            android:label="@string/plain_tweak_title"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.PlainTweakInfo" />
+        </activity>
+
+        <activity
+             android:name=".PlainTweakInfo" />
+             
         <provider
             android:name=".search.SettingsSearchIndexablesProvider"
             android:authorities="com.android.settings"

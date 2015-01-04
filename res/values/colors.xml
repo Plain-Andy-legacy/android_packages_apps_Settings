@@ -38,6 +38,7 @@
 
     <color name="divider_color">#20ffffff</color>
     <color name="title_color">@android:color/holo_blue_light</color>
+
     <color name="setup_divider_color_dark">#33ffffff</color>
     <color name="setup_divider_color_light">#33000000</color>
     <color name="setup_lock_pattern_view_regular_color_dark">#ffbdbdbd</color>
