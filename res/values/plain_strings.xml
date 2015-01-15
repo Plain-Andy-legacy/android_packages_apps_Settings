@@ -83,6 +83,10 @@
     <string name="changelog_error">Unable to load changelog</string>
     <string name="changelog_unknown">Unknown</string>
     <string name="changelog_version">Version</string>
+    
+    <!-- Device specific settings -->
+    <string name="quick_links_title">Quick Links</string>
+    <string name="advanced_settings_title">Device options</string>
 
     <!-- Rom Versioning -->
     <string name="display_category_rom_versioning_title">Software build information</string>
@@ -126,4 +130,4 @@
     <string name="current_density">Current</string>
     <string name="custom_density">Custom</string>
     <string name="stock_density">Stock</string>
-</resources>
+</resources>        

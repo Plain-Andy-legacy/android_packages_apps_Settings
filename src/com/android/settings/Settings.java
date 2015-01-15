@@ -21,8 +21,25 @@ import com.android.settings.applications.AppOpsSummary;
 /**
  * Top-level Settings activity
  */
-public class Settings extends SettingsActivity {
 
+public class Settings extends SettingsActivity {
+	    private void updateHeaderList(List<Header> target) {
+	    int i = 0;
+	    while (i < target.size()) {
+            Header header = target.get(i);
+            // Ids are integers, so downcasting
+            int id = (int) header.id;
+            if (id == R.id.advanced_settings) {
+                if (!needsAdvancedSettings())
+                    target.remove(header);
+            } 
+        }
+    }
+    
+	private boolean needsAdvancedSettings() {
+		return getResources().getBoolean(R.bool.has_advanced_settings);
+	}
+	
     /*
     * Settings subclasses for launching independently.
     */
