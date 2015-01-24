@@ -18,6 +18,13 @@
         android:title="@string/plain_tweak_title">
 
     <!-- Plain-Tweak Information -->
+     <ListPreference
+            android:key="notify_plaintweak"
+            android:title="@string/plaintweak_on_boot_title"
+            android:dialogTitle="@string/plaintweak_on_boot_title"
+            android:entries="@array/notify_plaintweak_entries"
+            android:entryValues="@array/notify_plaintweak_values" />    
+
     <PreferenceCategory
              android:key="plain_tweak_density_title"
              android:title="@string/plain_tweak_density_title">

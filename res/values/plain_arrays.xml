@@ -57,4 +57,18 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    
+        <!-- PLain-Tweak Info on boot notifications -->
+    <string-array name="notify_plaintweak_entries" translatable="false">
+        <item>@string/notify_plaintweak_default</item>        
+        <item>@string/notify_plaintweak_notification</item>
+        <item>@string/notify_plaintweak_toast</item>
+    </string-array>
+
+    <string-array name="notify_plaintweak_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>    
+    
 </resources>
