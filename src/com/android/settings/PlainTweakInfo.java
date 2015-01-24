@@ -17,46 +17,45 @@
 
 package com.android.settings;
 
-import android.app.Activity;
+import android.app.Notification;
+import android.app.Notification.Builder;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.os.Binder;
-import android.os.Build;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.RemoteException;
-import android.os.SELinux;
-import android.os.SystemClock;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.SystemProperties;
-import android.os.UserHandle;
-import android.os.UserManager;
+import android.os.Vibrator;
+import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
-import android.provider.SearchIndexableResource;
+import android.preference.SwitchPreference;
 import android.provider.Settings;
-import android.text.TextUtils;
+import android.provider.Settings.System;
 import android.util.Log;
 import android.widget.Toast;
-import com.android.settings.search.BaseSearchIndexProvider;
+import android.widget.TextView;
 import com.android.settings.search.Index;
 import com.android.settings.search.Indexable;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexable {
+public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexable, Preference.OnPreferenceChangeListener {
 
     private static final String LOG_TAG = "PlainTweakInfo";
+    
     private static final String KEY_PLAINTWEAK_GOV = "plain_tweak_gov";
     private static final String KEY_PLAINTWEAK_GOV2 = "plain_tweak_gov2";
     private static final String KEY_PLAINTWEAK_MAX = "plain_tweak_maxkhz";
@@ -73,13 +72,15 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
     private static final String KEY_MOD_CURRENT_DENSITY = "current_density";
     private static final String KEY_MOD_STOCK_DENSITY = "stock_density";
     private static final String KEY_MOD_CUSTOM_DENSITY = "custom_density";
-
+    private static final String KEY_NOTIFY_PLAINTWEAK = "notify_plaintweak";
+    private ListPreference mPlainTweakNotify;
+            	
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         addPreferencesFromResource(R.xml.plaintweak_info);
-
+        		
         setValueSummary(KEY_MOD_CURRENT_DENSITY, "ro.sf.lcd_density");
         setValueSummary(KEY_MOD_STOCK_DENSITY, "stockdensity");
         setValueSummary(KEY_MOD_CUSTOM_DENSITY, "customdensity");
@@ -96,8 +97,36 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
         setValueSummary(KEY_STOCK_MAX, "stockmaxkhz");
         setValueSummary(KEY_STOCK_MIN, "stockminkhz");
         setValueSummary(KEY_STOCK_TCP, "stocktcpcong");
-
+           
 	}
+	
+	@Override
+    public void onResume() {
+		super.onResume();
+		mPlainTweakNotify = (ListPreference) findPreference(KEY_NOTIFY_PLAINTWEAK);
+		int notifyValue = Settings.System.getInt(getContentResolver(),
+                   Settings.System.PLAIN_TWEAK_NOTIFICATIONS, 0);
+		mPlainTweakNotify.setValueIndex(notifyValue);
+		mPlainTweakNotify.setSummary(mPlainTweakNotify.getEntries()[notifyValue]);
+		mPlainTweakNotify.setOnPreferenceChangeListener(this);
+	}
+	
+	@Override
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+        final Context context = getActivity();
+        String key = preference.getKey();
+        if (KEY_NOTIFY_PLAINTWEAK.equals(key)) {
+            int notifyValue = Integer.valueOf((String) newValue);
+            int index = mPlainTweakNotify.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getContentResolver(), Settings.System.PLAIN_TWEAK_NOTIFICATIONS,
+                    notifyValue);
+            mPlainTweakNotify.setSummary(mPlainTweakNotify.getEntries()[index]);
+            getActivity().sendBroadcast(new Intent("PLAIN_TWEAK_NOTIFICATIONS"));         
+        }
+        return true; 		
+    }
+    
+
 
     private void removePreferenceIfPropertyMissing(PreferenceGroup preferenceGroup,
             String preference, String property ) {
