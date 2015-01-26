@@ -23,7 +23,12 @@
             android:title="@string/plaintweak_on_boot_title"
             android:dialogTitle="@string/plaintweak_on_boot_title"
             android:entries="@array/notify_plaintweak_entries"
-            android:entryValues="@array/notify_plaintweak_values" />    
+            android:entryValues="@array/notify_plaintweak_values" />
+     
+     <CheckBoxPreference
+			android:key="enable_plaintweak"
+			android:title="@string/enable_plaintweak_title"
+			android:defaultValue="true"/>
 
     <PreferenceCategory
              android:key="plain_tweak_density_title"
@@ -32,10 +37,6 @@
         <Preference android:key="current_density"
                 style="?android:preferenceInformationStyle"
                 android:title="@string/current_density"/>
-
-        <Preference android:key="custom_density"
-                style="?android:preferenceInformationStyle"
-                android:title="@string/custom_density"/>
 
         <Preference android:key="stock_density"
                 style="?android:preferenceInformationStyle"

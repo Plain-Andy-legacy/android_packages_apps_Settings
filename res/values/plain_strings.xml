@@ -124,12 +124,13 @@
 
     <string name="plain_tweak_density_title">LCD Density</string>
     <string name="current_density">Current</string>
-    <string name="custom_density">Custom</string>
     <string name="stock_density">Stock</string>
     
     <string name="plaintweak_on_boot_title">Show Plain-Tweak Info on boot</string>
     <string name="notify_plaintweak_default">Off (default)</string>
     <string name="notify_plaintweak_toast">Toast</string>
     <string name="notify_plaintweak_notification">Notification</string>
+    
+    <string name="enable_plaintweak_title">Enable/Disable Plain-Tweak</string>
     
 </resources>

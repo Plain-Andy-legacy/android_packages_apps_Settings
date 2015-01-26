@@ -69,18 +69,22 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
     private static final String KEY_STOCK_MAX = "stock_maxkhz";
     private static final String KEY_STOCK_MIN = "stock_minkhz";
     private static final String KEY_STOCK_TCP = "stock_tcpcong";
-    private static final String KEY_MOD_CURRENT_DENSITY = "current_density";
+    private static final String KEY_MOD_CURRENT_DENSITY = "custom_density";
     private static final String KEY_MOD_STOCK_DENSITY = "stock_density";
-    private static final String KEY_MOD_CUSTOM_DENSITY = "custom_density";
     private static final String KEY_NOTIFY_PLAINTWEAK = "notify_plaintweak";
+    private static final String KEY_ENABLE_PLAINTWEAK = "enable_plaintweak";
     private ListPreference mPlainTweakNotify;
+    private CheckBoxPreference mPlainTweakEnable;
             	
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         addPreferencesFromResource(R.xml.plaintweak_info);
-        		
+        
+        mPlainTweakNotify = addListPreference(KEY_NOTIFY_PLAINTWEAK);
+        mPlainTweakEnable = findAndInitCheckboxPref(KEY_ENABLE_PLAINTWEAK);
+                        		
         setValueSummary(KEY_MOD_CURRENT_DENSITY, "ro.sf.lcd_density");
         setValueSummary(KEY_MOD_STOCK_DENSITY, "stockdensity");
         setValueSummary(KEY_MOD_CUSTOM_DENSITY, "customdensity");
@@ -97,66 +101,71 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
         setValueSummary(KEY_STOCK_MAX, "stockmaxkhz");
         setValueSummary(KEY_STOCK_MIN, "stockminkhz");
         setValueSummary(KEY_STOCK_TCP, "stocktcpcong");
-           
+        
+        updatemPlainTweakEnable();
+		updatemPlainTweakNotify();	
+                   
 	}
-	
+			
 	@Override
-    public void onResume() {
-		super.onResume();
-		mPlainTweakNotify = (ListPreference) findPreference(KEY_NOTIFY_PLAINTWEAK);
-		int notifyValue = Settings.System.getInt(getContentResolver(),
-                   Settings.System.PLAIN_TWEAK_NOTIFICATIONS, 0);
-		mPlainTweakNotify.setValueIndex(notifyValue);
-		mPlainTweakNotify.setSummary(mPlainTweakNotify.getEntries()[notifyValue]);
-		mPlainTweakNotify.setOnPreferenceChangeListener(this);
-	}
-	
-	@Override
-	public boolean onPreferenceChange(Preference preference, Object newValue) {
-        final Context context = getActivity();
-        String key = preference.getKey();
-        if (KEY_NOTIFY_PLAINTWEAK.equals(key)) {
-            int notifyValue = Integer.valueOf((String) newValue);
-            int index = mPlainTweakNotify.findIndexOfValue((String) newValue);
-            Settings.System.putInt(getContentResolver(), Settings.System.PLAIN_TWEAK_NOTIFICATIONS,
-                    notifyValue);
-            mPlainTweakNotify.setSummary(mPlainTweakNotify.getEntries()[index]);
-            getActivity().sendBroadcast(new Intent("PLAIN_TWEAK_NOTIFICATIONS"));         
-        }
-        return true; 		
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+		if (preference == mPlainTweakEnable) {
+            writemPlainTweakEnable();
+		}
+		return true;
     }
     
-
-
-    private void removePreferenceIfPropertyMissing(PreferenceGroup preferenceGroup,
-            String preference, String property ) {
-        if (SystemProperties.get(property).equals("")) {
-            // Property is missing so remove preference from group
-            try {
-                preferenceGroup.removePreference(findPreference(preference));
-            } catch (RuntimeException e) {
-                Log.d(LOG_TAG, "Property '" + property + "' missing and no '"
-                        + preference + "' preference");
-            }
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mPlainTweakNotify) {
+			writemPlainTweakNotify(newValue);    
         }
+        return true;
+    }
+    
+	private void updatemPlainTweakEnable() {
+        mPlainTweakEnable.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.PLAIN_TWEAK_ENABLE, 1) != 0);
+            String value = Settings.System.getString(getContentResolver(), Settings.System.PLAIN_TWEAK_ENABLE);
+            SystemProperties.set(KEY_ENABLE_PLAINTWEAK, value);
     }
 
-    private void removePreferenceIfBoolFalse(String preference, int resId) {
-        if (!getResources().getBoolean(resId)) {
-            Preference pref = findPreference(preference);
-            if (pref != null) {
-                getPreferenceScreen().removePreference(pref);
-            }
-        }
+    private void updatemPlainTweakNotify(){
+		int PlainTweakNotify = Settings.System.getInt(getContentResolver(),
+                   Settings.System.PLAIN_TWEAK_NOTIFICATIONS, 0);
+        mPlainTweakNotify.setValueIndex(PlainTweakNotify);
+		mPlainTweakNotify.setSummary(mPlainTweakNotify.getEntries()[PlainTweakNotify]);		
+	}
+	
+    private void writemPlainTweakEnable() {
+        Settings.System.putInt(getContentResolver(),
+                Settings.System.PLAIN_TWEAK_ENABLE,
+                mPlainTweakEnable.isChecked() ? 1 : 0);
+         String value = Settings.System.getString(getContentResolver(), Settings.System.PLAIN_TWEAK_ENABLE);
+         SystemProperties.set(KEY_ENABLE_PLAINTWEAK, value);
+         getActivity().sendBroadcast(new Intent("PLAIN_TWEAK_ENABLE"));
     }
-
-    private void setStringSummary(String preference, String value) {
-        try {
-            findPreference(preference).setSummary(value);
-        } catch (RuntimeException e) {
-            findPreference(preference).setSummary(
-                getResources().getString(R.string.device_info_default));
+    
+    private void writemPlainTweakNotify(Object newValue) {
+		    int PlainTweakNotify = Integer.valueOf((String) newValue);
+            int index = mPlainTweakNotify.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getContentResolver(), Settings.System.PLAIN_TWEAK_NOTIFICATIONS,
+                    PlainTweakNotify);
+            mPlainTweakNotify.setSummary(mPlainTweakNotify.getEntries()[index]);
+            getActivity().sendBroadcast(new Intent("PLAIN_TWEAK_NOTIFICATIONS"));
+	}
+    
+	private ListPreference addListPreference(String prefKey) {
+        ListPreference pref = (ListPreference) findPreference(prefKey);
+        pref.setOnPreferenceChangeListener(this);
+        return pref;
+    }
+    
+    private CheckBoxPreference findAndInitCheckboxPref(String key) {
+        CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
+        if (pref == null) {
+            throw new IllegalArgumentException("Cannot find preference with key = " + key);
         }
+        pref.setOnPreferenceChangeListener(this);
+        return pref;
     }
 
     private void setValueSummary(String preference, String property) {
@@ -166,14 +175,6 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
                             getResources().getString(R.string.device_info_default)));
         } catch (RuntimeException e) {
             // No recovery
-        }
-    }
-
-    private void addStringPreference(String key, String value) {
-        if (value != null) {
-            setStringSummary(key, value);
-        } else {
-            getPreferenceScreen().removePreference(findPreference(key));
         }
     }
 }
