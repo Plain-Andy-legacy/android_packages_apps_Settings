@@ -69,7 +69,7 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
     private static final String KEY_STOCK_MAX = "stock_maxkhz";
     private static final String KEY_STOCK_MIN = "stock_minkhz";
     private static final String KEY_STOCK_TCP = "stock_tcpcong";
-    private static final String KEY_MOD_CURRENT_DENSITY = "custom_density";
+    private static final String KEY_MOD_CURRENT_DENSITY = "current_density";
     private static final String KEY_MOD_STOCK_DENSITY = "stock_density";
     private static final String KEY_NOTIFY_PLAINTWEAK = "notify_plaintweak";
     private static final String KEY_ENABLE_PLAINTWEAK = "enable_plaintweak";
@@ -85,9 +85,8 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
         mPlainTweakNotify = addListPreference(KEY_NOTIFY_PLAINTWEAK);
         mPlainTweakEnable = findAndInitCheckboxPref(KEY_ENABLE_PLAINTWEAK);
                         		
-        setValueSummary(KEY_MOD_CURRENT_DENSITY, "ro.sf.lcd_density");
-        setValueSummary(KEY_MOD_STOCK_DENSITY, "stockdensity");
-        setValueSummary(KEY_MOD_CUSTOM_DENSITY, "customdensity");
+        setValueSummary(KEY_MOD_CURRENT_DENSITY, "customdensity");
+        setValueSummary(KEY_MOD_STOCK_DENSITY, "ro.sf.lcd_density");
         setValueSummary(KEY_PLAINTWEAK_SCHED, "scheduler");
         setValueSummary(KEY_PLAINTWEAK_GOV, "gov");
         setValueSummary(KEY_PLAINTWEAK_GOV2, "gov2");
