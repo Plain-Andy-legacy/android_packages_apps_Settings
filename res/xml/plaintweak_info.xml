@@ -25,10 +25,10 @@
             android:entries="@array/notify_plaintweak_entries"
             android:entryValues="@array/notify_plaintweak_values" />
      
-     <CheckBoxPreference
+     <!--<CheckBoxPreference
 			android:key="enable_plaintweak"
 			android:title="@string/enable_plaintweak_title"
-			android:defaultValue="true"/>
+			android:defaultValue="true"/>-->
 
     <PreferenceCategory
              android:key="plain_tweak_density_title"

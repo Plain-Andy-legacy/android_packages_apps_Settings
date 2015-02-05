@@ -72,9 +72,8 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
     private static final String KEY_MOD_CURRENT_DENSITY = "current_density";
     private static final String KEY_MOD_STOCK_DENSITY = "stock_density";
     private static final String KEY_NOTIFY_PLAINTWEAK = "notify_plaintweak";
-    private static final String KEY_ENABLE_PLAINTWEAK = "enable_plaintweak";
+    //private static final String KEY_ENABLE_PLAINTWEAK = "enable_plaintweak";
     private ListPreference mPlainTweakNotify;
-    private CheckBoxPreference mPlainTweakEnable;
             	
     @Override
     public void onCreate(Bundle icicle) {
@@ -83,7 +82,6 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
         addPreferencesFromResource(R.xml.plaintweak_info);
         
         mPlainTweakNotify = addListPreference(KEY_NOTIFY_PLAINTWEAK);
-        mPlainTweakEnable = findAndInitCheckboxPref(KEY_ENABLE_PLAINTWEAK);
                         		
         setValueSummary(KEY_MOD_CURRENT_DENSITY, "customdensity");
         setValueSummary(KEY_MOD_STOCK_DENSITY, "ro.sf.lcd_density");
@@ -101,18 +99,17 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
         setValueSummary(KEY_STOCK_MIN, "stockminkhz");
         setValueSummary(KEY_STOCK_TCP, "stocktcpcong");
         
-        updatemPlainTweakEnable();
 		updatemPlainTweakNotify();	
                    
 	}
 			
-	@Override
+	/*@Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 		if (preference == mPlainTweakEnable) {
             writemPlainTweakEnable();
 		}
 		return true;
-    }
+    }*/
     
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mPlainTweakNotify) {
@@ -121,11 +118,11 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
         return true;
     }
     
-	private void updatemPlainTweakEnable() {
+	/*private void updatemPlainTweakEnable() {
         mPlainTweakEnable.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.PLAIN_TWEAK_ENABLE, 1) != 0);
             String value = Settings.System.getString(getContentResolver(), Settings.System.PLAIN_TWEAK_ENABLE);
             SystemProperties.set(KEY_ENABLE_PLAINTWEAK, value);
-    }
+    }*/
 
     private void updatemPlainTweakNotify(){
 		int PlainTweakNotify = Settings.System.getInt(getContentResolver(),
@@ -134,14 +131,14 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
 		mPlainTweakNotify.setSummary(mPlainTweakNotify.getEntries()[PlainTweakNotify]);		
 	}
 	
-    private void writemPlainTweakEnable() {
+    /*private void writemPlainTweakEnable() {
         Settings.System.putInt(getContentResolver(),
                 Settings.System.PLAIN_TWEAK_ENABLE,
                 mPlainTweakEnable.isChecked() ? 1 : 0);
          String value = Settings.System.getString(getContentResolver(), Settings.System.PLAIN_TWEAK_ENABLE);
          SystemProperties.set(KEY_ENABLE_PLAINTWEAK, value);
          getActivity().sendBroadcast(new Intent("PLAIN_TWEAK_ENABLE"));
-    }
+    }*/
     
     private void writemPlainTweakNotify(Object newValue) {
 		    int PlainTweakNotify = Integer.valueOf((String) newValue);
