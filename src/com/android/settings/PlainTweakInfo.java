@@ -80,9 +80,7 @@ public class PlainTweakInfo extends SettingsPreferenceFragment implements Indexa
         super.onCreate(icicle);
 
         addPreferencesFromResource(R.xml.plaintweak_info);
-       
-        mPlainTweakNotify = addListPreference(KEY_NOTIFY_PLAINTWEAK);
-                        		
+                               		
         setValueSummary(KEY_MOD_CURRENT_DENSITY, "customdensity");
         setValueSummary(KEY_MOD_STOCK_DENSITY, "ro.sf.lcd_density");
         setValueSummary(KEY_PLAINTWEAK_SCHED, "scheduler");
